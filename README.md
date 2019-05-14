@@ -1,2 +1,3 @@
-# autotask-endpoint
-Autotask Endpoint for SLINGR
+# Autotask Endpoint
+
+Endpoint for Autotask using the SOAP API.

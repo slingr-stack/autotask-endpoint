@@ -1,0 +1,140 @@
+{
+    "label": "Autotask",
+    "name": "autotask",
+    "apiVersion": "v1",
+    "internal": false,
+    "configurationType": "GLOBAL",
+    "deployment": {
+        "profiles":[
+            {
+                "name": "default",
+                "label": "Default",
+                "memory": 384,
+                "offHeapMinFactor": 1.5,
+                "description": "Default configuration"
+            }
+        ],
+        "allowMultipleInstances": false
+    },
+    "icon48": "https://storage.googleapis.com/static.slingrs.io/platform/endpoints/autotask.png",
+  "configurationHelpUrl": "/endpoints_autotask.html",
+    "status": "ACTIVE",
+    "stores": [],
+    "events": [
+        {
+            "label": "Record change",
+            "name": "recordChange",
+            "description": "When a record is created or updated in Autotask. Only when polling is enabled."
+        }
+    ],
+    "functions": [
+        {
+            "label": "Query",
+            "name": "_query"
+        },
+        {
+        	"label": "Update",
+        	"name": "_update"
+        },
+        {
+        	"label": "Create",
+        	"name": "_create"
+        },
+        {
+            "label": "Delete",
+            "name": "_delete"
+        },
+        {
+            "label": "Get entity",
+            "name": "_getEntity"
+        },
+        {
+            "label": "Get entity fields",
+            "name": "_getEntityFields"
+        },
+        {
+            "label": "Get web URL",
+            "name": "_getWebUrl"
+        }
+    ],
+    "scripts":[
+        "helpers.js"
+    ],
+    "configuration":[
+        {
+            "name": "username",
+            "label": "Username",
+            "description": "Autotask username",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "password",
+            "label": "Password",
+            "description": "Autotask password",
+            "type": "password",
+            "required": true
+        },
+        {
+            "name": "integrationCode",
+            "label": "Integration code",
+            "description": "Integration code provided by Autotask",
+            "type": "text",
+            "required": true
+        },
+        {
+            "name": "pollingEnabled",
+            "label": "Polling enabled",
+            "type": "buttonsGroup",
+            "required": true,
+            "defaultValue": "disable",
+            "typeOptions": {
+                "allowCustom": true,
+                "possibleValues":[
+                    {
+                        "label":"Enable",
+                        "name":"enable"
+                    },
+                    {
+                        "label":"Disable",
+                        "name":"disable"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "pollingFrequency",
+            "label": "Polling frequency",
+            "type": "text",
+            "defaultValue": "10",
+            "visibility": "config.pollingEnabled && config.pollingEnabled != 'disable'",
+            "typeOptions": {
+                "validation": {
+                    "function": "!config.pollingFrequency || utils.isPlaceholder(config.pollingFrequency) || utils.getInteger(config.pollingFrequency) >= 1",
+                    "message": "The time must be a valid placeholder or a positive integer greater than or equal to 1 minutes."
+                }
+            }
+        },
+        {
+            "name": "config1",
+            "label": "Entities with full polling",
+            "value": "For the following entities the endpoint can detect creations and updates: Account, AccountNote, AccountToDo, Contact, ContractNote, Opportunity, Phase, ProjectNote, Service, ServiceBundle, ServiceCall, Task, TaskNote, Ticket, TicketNote, TimeEntry",
+            "type": "info",
+            "visibility": "config.pollingEnabled && config.pollingEnabled != 'disable'"
+        },
+        {
+            "name": "config2",
+            "label": "Available entities",
+            "value": "For the following entities the endpoint can detect only creations: Appointment, ContractCost, ContractMilestone, InstalledProduct, Invoice, Project, ProjectCost, PurchaseOrder, Quote, QuoteTemplate, TicketCost",
+            "type": "info",
+            "visibility": "config.pollingEnabled && config.pollingEnabled != 'disable'"
+        },
+        {
+            "name": "entitiesToPoll",
+            "label": "Entities to poll",
+            "description": "Write the entities to poll separated by commas. This is case sensitive.",
+            "type": "text",
+            "visibility": "config.pollingEnabled && config.pollingEnabled != 'disable'"
+        }
+    ]
+}
