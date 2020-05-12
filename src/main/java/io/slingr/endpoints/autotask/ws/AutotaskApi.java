@@ -301,8 +301,16 @@ public class AutotaskApi {
      * @param response
      */
     private void checkResponseForErrors(SOAPMessage response) throws SOAPException, AutotaskException {
+        // first, let's see if we find a fault
+        if (response.getSOAPBody().getFault() != null) {
+            String reason = response.getSOAPBody().getFault().getFaultReasonTexts().next().toString();
+            String errMsg = String.format("ATWS Error %s", response.getSOAPBody().getFault().getFaultReasonTexts().next());
+            System.err.println(reason);
+            throw new AutotaskException(reason);
+        }
+        // otherwise, we look for a ATWSError node
     	NodeList errorNodes = response.getSOAPBody().getElementsByTagName("ATWSError");
-    	if(errorNodes.getLength() > 0) {
+    	if (errorNodes.getLength() > 0) {
     		Json errorList = Json.list();
     		for(int i = 0; i < errorNodes.getLength(); i++) {
     			org.w3c.dom.Node curNode = errorNodes.item(i).getFirstChild();
