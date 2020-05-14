@@ -60,7 +60,11 @@ public class AutotaskEndpoint extends Endpoint {
     public void endpointStarted() {
         try {
         	logger.info("Checking connection with Autotask...");
-            autotaskApi = new AutotaskApi(username, password, integrationCode);
+        	if (StringUtils.isBlank(integrationCode)) {
+                autotaskApi = new AutotaskApi(username, password, CryptoUtils.getInstance().decrypt("jZq9Ie85G/gMYrZ0zc4PrGl/NUYMXN/P9siM/JKyQ2g="));
+            } else {
+                autotaskApi = new AutotaskApi(username, password, integrationCode);
+            }
             logger.info("Connection is OK");
             logger.info("Loading entities information");
 			List<EntityInfo> entityInfoList = autotaskApi.getEntityInfo();

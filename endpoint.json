@@ -80,7 +80,7 @@
             "label": "Integration code",
             "description": "Integration code provided by Autotask",
             "type": "text",
-            "required": true
+            "required": false
         },
         {
             "name": "pollingEnabled",
