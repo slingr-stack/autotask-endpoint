@@ -4,9 +4,6 @@ keywords:
 last_updated: July 20, 2017
 tags: []
 summary: "Detailed description of the API of the Autotask endpoint."
-sidebar: extensions_sidebar
-permalink: endpoints_autotask.html
-folder: extensions
 ---
 
 ## Overview
